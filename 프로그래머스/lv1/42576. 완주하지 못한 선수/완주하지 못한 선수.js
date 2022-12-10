@@ -1,11 +1,12 @@
 function solution(participant, completion) {
-    let answer = '';
-    participant = participant.sort();
-    completion = completion.sort();
-    for (i = 0; i < completion.length - 1; i++) {
-        if (participant[i] !== completion[i]) {
-            return participant[i];
-        }
-    }
-    return participant[participant.length - 1];
+    var answer = '';
+    const counter = {};
+    participant.forEach(person => {
+        counter[person] = (counter[person] || 0) + 1;
+    })
+    completion.forEach(person => {
+        counter[person]--;
+        if (counter[person] === 0) delete counter[person];
+    })
+    return Object.keys(counter)[0];
 }
