@@ -1,12 +1,15 @@
 function solution(participant, completion) {
-    var answer = '';
-    const counter = {};
-    participant.forEach(person => {
-        counter[person] = (counter[person] || 0) + 1;
-    })
-    completion.forEach(person => {
-        counter[person]--;
-        if (counter[person] === 0) delete counter[person];
-    })
-    return Object.keys(counter)[0];
+    /*
+    for(let i in participant) {
+        if(completion.includes(participant[i]) == false) return participant[i];
+        completion.splice(completion.indexOf(participant[i]), 1);
+    }
+    */
+
+    participant.sort();
+    completion.sort();
+
+    for(let i in participant) {
+        if(participant[i] !== completion[i]) return participant[i];
+    }
 }
