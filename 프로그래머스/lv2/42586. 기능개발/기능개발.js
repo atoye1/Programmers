@@ -5,7 +5,7 @@ function solution(progresses, speeds) {
     while (pointer < progresses.length) {
         let multiplier = Math.ceil((100 - progresses[pointer]) / speeds[pointer]);
         // update progresses until first job is done
-		for (let i = pointer; i < progresses.length; i++) {
+	for (let i = pointer; i < progresses.length; i++) {
             progresses[i] += (multiplier * speeds[i]);
         }
         // count done jobs and append to answer
