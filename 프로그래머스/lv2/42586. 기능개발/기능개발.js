@@ -8,15 +8,13 @@ function solution(progresses, speeds) {
 		for (let i = pointer; i < progresses.length; i++) {
             progresses[i] += (multiplier * speeds[i]);
         }
-        console.log(multiplier)
-        console.log(progresses)
-        // count done job
+        // count done jobs and append to answer
         let count = 0;
         for (let i = pointer; i < progresses.length; i++) {
             if (progresses[i] >= 100) {
                 pointer++;
                 count++;
-            } else {
+            } else { // if job is not 100%, need to finish this job with multiplier
                 break;
             }
         }
