@@ -1,13 +1,15 @@
 function solution(participant, completion) {
     const counter = {};
-    participant.forEach(person => {
-        counter[person] = (counter[person] || 0) + 1;
-    })
+    const maxLen = participant.length;
+    for (let i = 0; i < maxLen; i++) {
+       if (!counter[participant[i]]) counter[participant[i]] = 0;
+       if (!counter[completion[i]]) counter[completion[i]] = 0;
+       counter[participant[i]]++;
+       counter[completion[i]]--;
+    }
     
-    completion.forEach(person => {
-        counter[person]--;
-        if (counter[person] === 0) delete counter[person];
-    })
-    
-    return Object.keys(counter)[0];
+    for (let k in counter) {
+        if (counter[k] > 0) return k;
+    }
+    return null;
 }
