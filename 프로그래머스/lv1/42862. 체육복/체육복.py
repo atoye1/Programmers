@@ -7,9 +7,7 @@ def solution(n, lost, reserve):
     saved = 0
     p1, p2 = (0, 0)
     while p1 < len(net_lost) and p2 < len(net_reserve):
-        if net_lost[p1] == net_reserve[p2] - 1 or \
-            net_lost[p1] == net_reserve[p2] + 1 or \
-        	net_lost[p1] == net_reserve[p2]:
+        if abs(net_lost[p1] - net_reserve[p2]) <= 1:
             p1 += 1
             p2 += 1
             saved += 1
