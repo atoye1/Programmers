@@ -11,13 +11,10 @@ def solution(people, limit):
     while people:
         largest = people.pop()
         if not people:
-            answer += 1
+            pass
         elif largest + people[0] > limit:
-            answer += 1
+            pass
         else:
             smallest = people.popleft()
-            sum = largest + smallest
-            while people and sum + people[0] <= limit:
-                sum += people.popleft()
-            answer += 1
+        answer += 1
     return answer
