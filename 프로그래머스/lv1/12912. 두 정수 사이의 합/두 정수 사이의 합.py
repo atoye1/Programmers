@@ -10,6 +10,6 @@ def solution(a, b):
     if a > b:
         a, b = b, a
         
-    answer = list(accumulate(range(a, b + 1)))
+    answer = sum(range(a, b + 1))
     
-    return answer[-1]
+    return answer
