@@ -13,7 +13,6 @@ def is_prime(num):
     return True
 
 def solution(numbers):
-    answer = 0
     l = list(numbers)
     checked_num = set()
     for i in range(1, len(numbers) + 1):
@@ -22,5 +21,4 @@ def solution(numbers):
             num = int(''.join(elem))
             if is_prime(num) and num not in checked_num:
                 checked_num.add(num)
-                answer += 1
-    return answer
+    return len(checked_num)
