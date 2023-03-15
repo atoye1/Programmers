@@ -1,6 +1,9 @@
 from itertools import permutations
 import math
 
+# numbers의 길이가 7에 불과해서 다항시간처럼 비효율적인 알고리즘을 사용해도 된다.
+# 조합이나 순열 등의 완전탐색도 가능하다는 의미다.
+
 def is_prime(num):
     if num == 1 or num == 0:
         return False
@@ -17,10 +20,7 @@ def solution(numbers):
         p = permutations(l, i)
         for elem in p:
             num = int(''.join(elem))
-            print(num)
-            if is_prime(num):
-                if num not in checked_num:
-                    checked_num.add(num)
-                    answer += 1
-    print(checked_num)
+            if is_prime(num) and num not in checked_num:
+                checked_num.add(num)
+                answer += 1
     return answer
