@@ -5,7 +5,6 @@ def solution(s):
     # 문자열을 줄이는 것은 결국 짝을 찾는 거니깐. 짝이 되려면 문자열의 길이 // 2 까지만 가능하다.
     # 예를들어 크기가 10인 문자열의 최대 검색은 5까지만 검색하면 된다.
     max_pair = len(s) // 2
-    s_list = list(s)
     # 1부터 max_pair까지 완전탐색해서 최솟값을 리턴하면 된다.
     
     for pair_size in range(1, max_pair + 1):
@@ -15,7 +14,8 @@ def solution(s):
         stack = []
         for i in range(0,len(s) - pair_size + 1, pair_size):
             now = s[i:i + pair_size]
-            if not stack:
+            
+            if not stack: #스택이 비어있으면 무조건 푸쉬해주면 된다.
                 stack.append(now)
             else:
                 before = stack.pop()
@@ -31,14 +31,13 @@ def solution(s):
                     # 만약 앞의 요소가 문자면, 그대로 놔두고 2를 집어넣는다.
                         stack.append(2)
                         stack.append(now)
+                # 이전의 단어가 지금 단어와 다른 경우 지금단어를 그대로 스택에 넣는다.
                 else:
                     stack.append(before)
                     stack.append(now)
-        print(i)
         stack = list(map(str, stack))
-        # 남은 길이를 더해줘야 된다.
+        # 남은 길이를 더해줘야 된다. 나머지 연산자를 활용한다.
         result = len(''.join(stack)) + len(s) % pair_size
-        print(pair_size, result)
         answer = min(answer, result)
 
     return answer
