@@ -46,6 +46,7 @@ def is_possible(houses, interval, count):
 start = 1
 # 최대 인터벌은 최댓값 - 최솟값이다.
 end = houses[-1] - houses[0]
+end //= (router_count - 1)
 # answer의 초깃값은 항상 최소.
 answer = 1
 while start <= end:
