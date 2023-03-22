@@ -13,6 +13,7 @@ def bfs(graph, start):
             nr, nc = r + move[0], c + move[1]
             # 먼저 nr, nc가 유효한 좌표인지 확인한다.
             # 좌표가 유효하지 않다면 넘긴다.
+            # 인덱스 처리 실수해서 시간 오래걸렸다. 기본기가 중요!!
             if nr < 0 or nr > row - 1 or nc < 0 or nc > col - 1:
                 continue
             if graph[nr][nc] == 0:  # 만약 새로운 좌표가 감염가능한 안전영역이면,
@@ -25,6 +26,7 @@ def bfs(graph, start):
 row, col = map(int, input().split())
 board = [list(map(int, input().split())) for _ in range(row)]
 
+# 빈 좌표가 어디있는지 파악하고, 이를 대상으로 벽을 세울 수 있는 조합을 구한다.
 empty_coords = []
 for r in range(row):
     for c in range(col):
@@ -32,12 +34,15 @@ for r in range(row):
             empty_coords.append((r, c))
 cases = combinations(empty_coords, 3)
 
+# answer의 최댓값을 구해야하므로 초깃값은 0으로 설정한다.
 answer = 0
+
+# 케이스별로 순회하면서 answer의 최댓값을 구하는게 핵심이다.
 for case in cases:
     # 이번 케이스에서 쓸 보드를 만든다.
     new_board = [[] for _ in range(row)]
     viruses = []
-    safe_count = 0  # 안전영역 카운트를 초기화 한
+    safe_count = 0  # 안전영역 카운트를 초기화 한다.
     # 뉴 보드를 원본과 동기화시키면서 벽을 세울 장소는 따로 지정해준다.
     for i in range(row):
         for j in range(col):
