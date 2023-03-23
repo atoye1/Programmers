@@ -1,55 +1,37 @@
+import sys
 from collections import deque
+input = sys.stdin.readline
 
-
-# 모듈화해서 개발하니 디버깅이 훨씬 쉬웠다.
-# is_ripen 함수를 잘못 작성했었는데 모듈화를 해서 틀린점을 쉽게 찾을 수 있었다.
-def count_zero(board):
-    count = 0
-    for i in board:
-        for j in i:
-            if j == 0:  # 만약 0인 토마토가 한개라도 있으면 전부다 익지 않은 것이다.
-                count += 1
-    return count
-
-
-# 입력 값 처리
-col, row = map(int, input().split())
-board = [list(map(int, input().split())) for _ in range(row)]
-
-time = 0
+m, n = map(int, input().split())
+arr = [list(map(int, input().split())) for _ in range(n)]
 q = deque()
-for i in range(len(board)):
-    for j in range(len(board[0])):
-        if board[i][j] == 1:
-            q.append((i, j, time))
-count = count_zero(board)
-# 네 방향으로 전염되는걸 배열에 담았다.
-moves = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-# bfs이므로 뎈을 활용한다.
+
+for i in range(n):
+    for j in range(m):
+        if arr[i][j] == 1:
+            # 익은 토마토(1)의 좌표를 큐에 저장
+            q.append([i, j])
+
+dx, dy = [1, -1, 0, 0], [0, 0, 1, -1]
 while q:
-    if count == 0:
-        break
-    r, c, time = q.popleft()
-    # 현재 토마토가 익어있으면
-    if board[r][c] == 1:
-        # 4가지 방향으로 탐색한다.
-        for move in moves:
-            nr, nc, nt = r + move[0], c + move[1], time + 1
-            # 인덱스 체크를 해서 적절한 경우만.
-            if nr >= 0 and nr < row and nc >= 0 and nc < col:
-                if board[nr][nc] == 0:  # 덜익은 토마토인 경우만.
-                    board[nr][nc] = 1  # 익히고
-                    q.append((nr, nc, nt))  # 다음 전염을 위해 옮겨준다.
-                    count -= 1 # 카운트를 감소시킨다.
-        # 현재 토마토가 이미 익어 있다면 넘어간다.
-    elif board[r][c] == 1:
-        continue
-    # 현재 토마토가 비어 있는 상태이면
-    elif board[r][c] == -1:
-        continue
-    time += 1
-    
-if count == 0:
-    print(time)
-else:
-    print(-1)
+    x, y = q.popleft()
+    for i in range(4):
+        # 익은 토마토 상하좌우 돌면서 일수 저장
+        nx = x + dx[i]
+        ny = y + dy[i]
+
+        if 0 <= nx < n and 0 <= ny < m:
+            if arr[nx][ny] == 0:
+                arr[nx][ny] = arr[x][y] + 1
+                q.append([nx, ny])
+
+ans = 0
+for line in arr:
+    for tomato in line:
+        if tomato == 0:
+            # 안익은 토마토(0)이 있으면 바로 정지
+            print(-1)
+            exit()
+    ans = max(ans, max(line))
+# 1에서 시작했기 때문에 결과 값에서 1빼주기
+print(ans-1)
