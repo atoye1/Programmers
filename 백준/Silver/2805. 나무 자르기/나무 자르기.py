@@ -5,19 +5,17 @@
 # 길이는 10억이니까 O(logN)을 사용해야 한다.
 
 import sys
+from collections import Counter
 N, M = map(int, sys.stdin.readline().rstrip().split())
-trees = list(map(int, sys.stdin.readline().split()))
+trees = Counter(map(int, sys.stdin.readline().split()))
 
 start = 0
-end = 1_000_000_000
+end = max(trees)
 
 result = 0
 while (start <= end):
     mid = (start + end) // 2
-    total = 0
-    for tree in trees:
-        if tree > mid:
-            total += tree - mid
+    total = sum((h - mid) * i for h, i in trees.items() if h > mid)
     if total > M:  # 현재 자른 나무의 합이 목표보다 크다. 따라서 자르는 길이를 올려서 더 적게 자를 수 있는지 파악해야 한다.
         result = mid
         start = mid + 1
