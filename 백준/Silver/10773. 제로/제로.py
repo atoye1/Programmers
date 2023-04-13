@@ -4,8 +4,9 @@ stack = []
 while count:
     current = int(input())
     if current == 0:
-        stack.pop()
+        total -= stack.pop()
     else:
         stack.append(current)
+        total += current
     count -= 1
-print(sum(stack))
+print(total)
