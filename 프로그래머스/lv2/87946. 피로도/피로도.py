@@ -1,19 +1,21 @@
-from itertools import permutations 
+from itertools import permutations
 
 def solution(k, dungeons):
-    # 최댓값을 구해야하므로 최대 던전 개수부터 시작해서 내려간다.
-    # 중간에 만족하는 값이 나오면 바로 리턴해주면 된다.
-    for i in range(len(dungeons), 0, -1):
-        # 8개, 7개, 6개, ... 식으로 순열을 구해 내려간다.
-        for cases in permutations(dungeons, i):
-            # 현재 피로도를 리셋한다.
-            now = k
-            passed = True
-            for case in cases:
-                if now < case[0]:
-                    passed = False
-                    break
-                else:
-                    now -= case[1]
-            if passed:
-                return i
+    answer = -1
+    # 던전이 총 8개 밖에 안되니깐 8! 40320번 비교하면 되니깐 완전탐색가능
+    # 10! 정도는 완전탐색 할 수 있다고 보면된다.
+    
+    # 완전탐색이면 순열로 섞어서 무식하게 풀어보고, 최적값을 리턴하면 된다.
+    candidates = permutations(dungeons)
+    for case in candidates:
+        energy = k
+        visited = 0
+        for d in case:
+            if energy >= d[0]:
+                energy -= d[1]
+                visited += 1
+            else:
+                break
+        answer = max(answer, visited) 
+    
+    return answer
