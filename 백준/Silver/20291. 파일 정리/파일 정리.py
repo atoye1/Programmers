@@ -10,7 +10,5 @@ for _file in files:
     else:
         c[ext] = 1
 
-keys_list = list(c.keys())
-keys_list.sort()
-for key in keys_list:
-    print(key, c[key], sep=' ')
+for k, v in sorted(c.items(), key=lambda x: x[0]):
+    print(k, v)
